@@ -146,13 +146,13 @@
 
       /* --- CORE GAMEPLAY ANIMATIONS --- */
       @keyframes shake {
-        10%, 90% { transform: translate3d(-1px, 0, 0); }
-        20%, 80% { transform: translate3d(2px, 0, 0); }
-        30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
-        40%, 60% { transform: translate3d(3px, 0, 0); }
+        10%, 90% { transform: var(--base-transform) translate3d(-1px, 0, 0); }
+        20%, 80% { transform: var(--base-transform) translate3d(2px, 0, 0); }
+        30%, 50%, 70% { transform: var(--base-transform) translate3d(-3px, 0, 0); }
+        40%, 60% { transform: var(--base-transform) translate3d(3px, 0, 0); }
       }
       .typo-shake {
-        animation: shake 0.3s var(--ease-out-cubic) both;
+        animation: shake 0.2s var(--ease-out-cubic);
       }
 
       @keyframes word-complete-burst {
@@ -160,16 +160,16 @@
         to { opacity: 0; }
       }
       .word-completed {
-        animation: word-complete-burst 0.3s var(--ease-out-quad) forwards;
+        animation: word-complete-burst 0.2s var(--ease-out-quad) forwards;
         z-index: 10; 
       }
 
       @keyframes score-popup-animation {
-        from { transform: translateX(-50%) translateY(0); opacity: 1; }
-        to { transform: translateX(-50%) translateY(-60px); opacity: 0; }
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(-60px); opacity: 0; }
       }
       .score-popup {
-        animation: score-popup-animation 1.5s ease-out forwards;
+        animation: score-popup-animation 1s ease-out forwards;
       }
 
       /* --- BACKGROUND & EFFECTS --- */
@@ -186,7 +186,7 @@
         50% { box-shadow: inset 0 0 8px rgba(0,0,0,0.6), 0 0 4px #fff, 0 0 12px var(--color-primary-light), 0 0 20px var(--color-primary), 4px 4px 12px rgba(0,0,0,0.6); border-color: var(--color-primary-light); }
       }
       .power-up-active {
-        animation: active-powerup-glow 1.5s infinite ease-in-out;
+        animation: active-powerup-glow 1.2s infinite ease-in-out;
       }
       
       @keyframes game-over-glow {
@@ -194,7 +194,7 @@
         50% { text-shadow: 0 0 8px var(--color-danger-light), 0 0 25px var(--color-danger), 2px 2px 6px rgba(0,0,0,0.4); }
       }
       .animate-game-over-glow {
-        animation: game-over-glow 2.5s infinite ease-in-out;
+        animation: game-over-glow 1.8s infinite ease-in-out;
       }
 
       @keyframes time-warp-vignette {
@@ -204,7 +204,7 @@
       }
       .time-warp-effect::after {
         content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        pointer-events: none; animation: time-warp-vignette 2s infinite alternate ease-in-out;
+        pointer-events: none; animation: time-warp-vignette 1.5s infinite alternate ease-in-out;
         z-index: 50; border-radius: inherit;
       }
       
@@ -221,7 +221,7 @@
         }
       }
       .start-button-animated {
-        animation: start-button-pulse 2.5s infinite ease-in-out;
+        animation: start-button-pulse 1.8s infinite ease-in-out;
       }
 
       /* --- MENU DECORATIONS --- */
@@ -269,25 +269,25 @@
       }
 
       .animate-fade-in {
-        animation: fade-in 0.4s var(--ease-out-cubic) forwards;
+        animation: fade-in 0.25s var(--ease-out-cubic) forwards;
       }
       .animate-fade-out {
-        animation: fade-out 0.4s var(--ease-out-cubic) forwards;
+        animation: fade-out 0.25s var(--ease-out-cubic) forwards;
       }
       .animate-fade-in-up {
-        animation: fade-in-up 0.5s var(--ease-out-cubic) forwards;
+        animation: fade-in-up 0.3s var(--ease-out-cubic) forwards;
       }
       .animate-fade-out-down {
-        animation: fade-out-down 0.4s var(--ease-out-cubic) forwards;
+        animation: fade-out-down 0.25s var(--ease-out-cubic) forwards;
       }
       .animate-slide-in-from-top {
-        animation: slide-in-from-top 0.4s var(--ease-out-cubic) forwards;
+        animation: slide-in-from-top 0.25s var(--ease-out-cubic) forwards;
       }
       .animate-slide-out-to-top {
-        animation: slide-out-to-top 0.4s var(--ease-out-cubic) forwards;
+        animation: slide-out-to-top 0.25s var(--ease-out-cubic) forwards;
       }
       .animate-subtle-zoom-in {
-        animation: subtle-zoom-in 0.4s var(--ease-out-cubic) forwards;
+        animation: subtle-zoom-in 0.25s var(--ease-out-cubic) forwards;
       }
 
       /* Animation Delay Utilities */
@@ -309,7 +309,7 @@
         }
       }
     </script>
-    <script type="module" crossorigin src="/typinocom/assets/index-D59Wgqf9.js"></script>
+    <script type="module" crossorigin src="/typinocom/assets/index-DaUHKObU.js"></script>
   </head>
   <body class="bg-slate-900">
     <div id="root"></div>
