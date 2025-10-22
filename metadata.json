@@ -1,0 +1,5 @@
+{
+  "name": "typino.com",
+  "description": "A futuristic, neon-themed typing game where you race against falling words. Type the words before they hit the bottom of the screen. Adjust the speed with a slider to challenge yourself.",
+  "requestFramePermissions": []
+}

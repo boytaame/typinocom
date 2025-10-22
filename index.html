@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>typino.com</title>
+    <style>
+      :root, [data-theme="neon-pulse"] {
+        --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --ease-out-cubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        --ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+
+        --color-bg-start: #100f2c;
+        --color-bg-end: #050214;
+
+        --color-primary: #ff00ff; /* Magenta */
+        --color-primary-light: #ff77ff;
+        --color-primary-dark: #cc00cc;
+        --color-primary-text-on-dark: #ffe3ff;
+
+        --color-secondary: #00e5ff; /* Cyan */
+        --color-secondary-light: #80f2ff;
+        --color-secondary-text-on-dark: #e0ffff;
+
+        --color-danger: #ff4500; /* Orangered */
+        --color-danger-light: #ff7043;
+
+        --color-success: #76ff03; /* Lime */
+        --color-success-light: #b2ff59;
+
+        --color-text-base: white;
+        --color-text-muted: #94a3b8; /* slate-400 */
+        --color-text-dark: #020617; /* slate-950 */
+
+        --color-ui-base: #201a40;
+        --color-ui-medium: #302a50;
+        --color-ui-light: #403a60;
+
+        --shadow-primary: inset 0 4px 8px rgba(0,0,0,0.7), 0 0 2px #fff, 0 0 6px var(--color-primary-light), 0 0 12px var(--color-primary), 5px 5px 15px rgba(0,0,0,0.5);
+      }
+      
+      [data-theme="cyber-sunset"] {
+        --color-bg-start: #2d1942;
+        --color-bg-end: #1c0f2a;
+        
+        --color-primary: #ff7e5f; /* Coral */
+        --color-primary-light: #feb47b; /* Light Orange */
+        --color-primary-dark: #e66a50;
+        --color-primary-text-on-dark: #fff2ef;
+        
+        --color-secondary: #ec4899; /* Pink-500 */
+        --color-secondary-light: #f9a8d4; /* Pink-300 */
+        --color-secondary-text-on-dark: #fce7f3; /* Pink-100 */
+        
+        --color-danger: #f43f5e; /* Rose-500 */
+        --color-danger-light: #fb7185; /* Rose-400 */
+
+        --color-success: #60a5fa; /* Blue-400 */
+        --color-success-light: #93c5fd; /* Blue-300 */
+
+        --color-ui-base: #3c2a4d;
+        --color-ui-medium: #4d3863;
+        --color-ui-light: #61487f;
+
+        --shadow-primary: inset 0 4px 8px rgba(0,0,0,0.7), 0 0 2px #fff, 0 0 6px var(--color-primary-light), 0 0 12px var(--color-primary), 5px 5px 15px rgba(0,0,0,0.5);
+      }
+
+      [data-theme="emerald-grid"] {
+        --color-bg-start: #052e16; /* Green-950 */
+        --color-bg-end: #021a0c;
+        
+        --color-primary: #10b981; /* Emerald-500 */
+        --color-primary-light: #6ee7b7; /* Emerald-300 */
+        --color-primary-dark: #059669; /* Emerald-600 */
+        --color-primary-text-on-dark: #d1fae5; /* Emerald-100 */
+
+        --color-secondary: #a3e635; /* Lime-400 */
+        --color-secondary-light: #bef264; /* Lime-300 */
+        --color-secondary-text-on-dark: #f7fee7; /* Lime-100 */
+        
+        --color-danger: #facc15; /* Yellow-400 */
+        --color-danger-light: #fde047; /* Yellow-300 */
+
+        --color-success: #ffffff; /* White */
+        --color-success-light: #f0f0f0; 
+        
+        --color-ui-base: #064e3b; /* Green-900 */
+        --color-ui-medium: #047857; /* Green-700 */
+        --color-ui-light: #059669; /* Green-600 */
+
+        --shadow-primary: inset 0 4px 8px rgba(0,0,0,0.7), 0 0 2px #fff, 0 0 6px var(--color-primary-light), 0 0 12px var(--color-primary), 5px 5px 15px rgba(0,0,0,0.5);
+      }
+
+      [data-theme="blood-moon"] {
+        --color-bg-start: #1a0000;
+        --color-bg-end: #000000;
+        
+        --color-primary: #dc2626; /* Red-600 */
+        --color-primary-light: #ef4444; /* Red-500 */
+        --color-primary-dark: #b91c1c; /* Red-700 */
+        --color-primary-text-on-dark: #fee2e2; /* Red-100 */
+
+        --color-secondary: #f8fafc; /* Slate-50 */
+        --color-secondary-light: #ffffff; /* White */
+        --color-secondary-text-on-dark: #e2e8f0; /* Slate-200 */
+        
+        --color-danger: #facc15; /* Yellow-400 */
+        --color-danger-light: #fde047; /* Yellow-300 */
+
+        --color-success: #38bdf8; /* Sky-400 */
+        --color-success-light: #7dd3fc; /* Sky-300 */
+        
+        --color-ui-base: #1f2937; /* Slate-800 */
+        --color-ui-medium: #374151; /* Slate-700 */
+        --color-ui-light: #4b5563; /* Slate-600 */
+
+        --shadow-primary: inset 0 4px 8px rgba(0,0,0,0.7), 0 0 2px #fff, 0 0 6px var(--color-primary-light), 0 0 12px var(--color-primary), 5px 5px 15px rgba(0,0,0,0.5);
+      }
+
+      [data-theme="plasma-core"] {
+        --color-bg-start: #1f1f2e;
+        --color-bg-end: #0f0f1a;
+        
+        --color-primary: #facc15; /* Yellow-400 */
+        --color-primary-light: #fde047; /* Yellow-300 */
+        --color-primary-dark: #eab308; /* Yellow-500 */
+        --color-primary-text-on-dark: #fefce8; /* Yellow-50 */
+
+        --color-secondary: #3b82f6; /* Blue-500 */
+        --color-secondary-light: #60a5fa; /* Blue-400 */
+        --color-secondary-text-on-dark: #dbeafe; /* Blue-100 */
+        
+        --color-danger: #ec4899; /* Pink-500 */
+        --color-danger-light: #f472b6; /* Pink-400 */
+
+        --color-success: #4ade80; /* Green-400 */
+        --color-success-light: #86efac; /* Green-300 */
+        
+        --color-ui-base: #1e293b; /* Slate-800 */
+        --color-ui-medium: #334155; /* Slate-700 */
+        --color-ui-light: #475569; /* Slate-600 */
+
+        --shadow-primary: inset 0 4px 8px rgba(0,0,0,0.7), 0 0 2px #fff, 0 0 6px var(--color-primary-light), 0 0 12px var(--color-primary), 5px 5px 15px rgba(0,0,0,0.5);
+      }
+
+      /* --- CORE GAMEPLAY ANIMATIONS --- */
+      @keyframes shake {
+        10%, 90% { transform: translate3d(-1px, 0, 0); }
+        20%, 80% { transform: translate3d(2px, 0, 0); }
+        30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+        40%, 60% { transform: translate3d(3px, 0, 0); }
+      }
+      .typo-shake {
+        animation: shake 0.3s var(--ease-out-cubic) both;
+      }
+
+      @keyframes word-complete-burst {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+      .word-completed {
+        animation: word-complete-burst 0.3s var(--ease-out-quad) forwards;
+        z-index: 10; 
+      }
+
+      @keyframes score-popup-animation {
+        from { transform: translateX(-50%) translateY(0); opacity: 1; }
+        to { transform: translateX(-50%) translateY(-60px); opacity: 0; }
+      }
+      .score-popup {
+        animation: score-popup-animation 1.5s ease-out forwards;
+      }
+
+      /* --- BACKGROUND & EFFECTS --- */
+      @keyframes background-pan {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 0% 100%; }
+      }
+      .background-grid-animated {
+        animation: background-pan linear infinite;
+      }
+
+      @keyframes active-powerup-glow {
+        0%, 100% { box-shadow: inset 0 0 6px rgba(0,0,0,0.7), 0 0 2px #fff, 0 0 8px var(--color-primary), 0 0 15px var(--color-primary-dark), 4px 4px 12px rgba(0,0,0,0.5); border-color: var(--color-primary); }
+        50% { box-shadow: inset 0 0 8px rgba(0,0,0,0.6), 0 0 4px #fff, 0 0 12px var(--color-primary-light), 0 0 20px var(--color-primary), 4px 4px 12px rgba(0,0,0,0.6); border-color: var(--color-primary-light); }
+      }
+      .power-up-active {
+        animation: active-powerup-glow 1.5s infinite ease-in-out;
+      }
+      
+      @keyframes game-over-glow {
+        0%, 100% { text-shadow: 0 0 5px var(--color-danger-light), 0 0 15px var(--color-danger), 2px 2px 4px rgba(0,0,0,0.3); }
+        50% { text-shadow: 0 0 8px var(--color-danger-light), 0 0 25px var(--color-danger), 2px 2px 6px rgba(0,0,0,0.4); }
+      }
+      .animate-game-over-glow {
+        animation: game-over-glow 2.5s infinite ease-in-out;
+      }
+
+      @keyframes time-warp-vignette {
+        0% { box-shadow: inset 0 0 0px 0px hsla(200, 100%, 50%, 0); }
+        50% { box-shadow: inset 0 0 150px 50px hsla(200, 100%, 50%, 0.3); }
+        100% { box-shadow: inset 0 0 0px 0px hsla(200, 100%, 50%, 0); }
+      }
+      .time-warp-effect::after {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        pointer-events: none; animation: time-warp-vignette 2s infinite alternate ease-in-out;
+        z-index: 50; border-radius: inherit;
+      }
+      
+      @keyframes start-button-pulse {
+        0%, 100% { 
+          transform: scale(1);
+          box-shadow: var(--shadow-primary); 
+          filter: brightness(1);
+        }
+        50% { 
+          transform: scale(1.03); 
+          box-shadow: inset 0 6px 12px rgba(0,0,0,0.8), 0 0 4px #fff, 0 0 10px var(--color-primary-light), 0 0 20px var(--color-primary), 5px 5px 20px rgba(0,0,0,0.6);
+          filter: brightness(1.1);
+        }
+      }
+      .start-button-animated {
+        animation: start-button-pulse 2.5s infinite ease-in-out;
+      }
+
+      /* --- MENU DECORATIONS --- */
+      @keyframes float-around {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        25% { transform: translate(15px, 20px) rotate(15deg); }
+        50% { transform: translate(-10px, -15px) rotate(-10deg); }
+        75% { transform: translate(10px, -20px) rotate(20deg); }
+        100% { transform: translate(0, 0) rotate(0deg); }
+      }
+
+      @keyframes pulse-opacity {
+        from { opacity: var(--start-opacity, 0.1); }
+        to { opacity: var(--end-opacity, 0.4); }
+      }
+
+      /* --- NEW UI TRANSITION ANIMATIONS --- */
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes fade-out {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+      @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fade-out-down {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(20px); }
+      }
+      @keyframes slide-in-from-top {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes slide-out-to-top {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(-30px); }
+      }
+      @keyframes subtle-zoom-in {
+        from { opacity: 0; transform: scale(0.98); }
+        to { opacity: 1; transform: scale(1); }
+      }
+
+      .animate-fade-in {
+        animation: fade-in 0.4s var(--ease-out-cubic) forwards;
+      }
+      .animate-fade-out {
+        animation: fade-out 0.4s var(--ease-out-cubic) forwards;
+      }
+      .animate-fade-in-up {
+        animation: fade-in-up 0.5s var(--ease-out-cubic) forwards;
+      }
+      .animate-fade-out-down {
+        animation: fade-out-down 0.4s var(--ease-out-cubic) forwards;
+      }
+      .animate-slide-in-from-top {
+        animation: slide-in-from-top 0.4s var(--ease-out-cubic) forwards;
+      }
+      .animate-slide-out-to-top {
+        animation: slide-out-to-top 0.4s var(--ease-out-cubic) forwards;
+      }
+      .animate-subtle-zoom-in {
+        animation: subtle-zoom-in 0.4s var(--ease-out-cubic) forwards;
+      }
+
+      /* Animation Delay Utilities */
+      .animation-delay-100 { animation-delay: 100ms; }
+      .animation-delay-200 { animation-delay: 200ms; }
+      .animation-delay-300 { animation-delay: 300ms; }
+      .animation-delay-400 { animation-delay: 400ms; }
+      .animation-delay-500 { animation-delay: 500ms; }
+      .animation-delay-600 { animation-delay: 600ms; }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "react/": "https://aistudiocdn.com/react@^19.2.0/",
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-slate-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
