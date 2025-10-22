@@ -26,8 +26,8 @@ interface PowerUpNotificationProps {
   onComplete: (id: number) => void;
 }
 
-const NOTIFICATION_DURATION = 2500;
-const ANIMATION_OUT_DURATION = 400;
+const NOTIFICATION_DURATION = 2000;
+const ANIMATION_OUT_DURATION = 250;
 
 const PowerUpNotification: React.FC<PowerUpNotificationProps> = ({ notification, onComplete }) => {
   const [animationClass, setAnimationClass] = useState('animate-slide-in-from-top');

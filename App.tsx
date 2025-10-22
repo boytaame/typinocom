@@ -1,3 +1,4 @@
+
 import React, { useRef, useState, useEffect } from 'react';
 import GameScreen from './components/GameScreen';
 import Controls from './components/Controls';
@@ -7,6 +8,8 @@ import PowerUpAnimationLayer from './components/PowerUpAnimationLayer';
 import ScoreHistoryModal from './components/ScoreHistoryModal';
 import OptionsMenu from './components/OptionsMenu';
 import MenuBackgroundEffects from './components/MenuBackgroundEffects';
+
+type WordFacing = 'tilted' | 'upright';
 
 const App: React.FC = () => {
   const {
@@ -37,6 +40,7 @@ const App: React.FC = () => {
   const [isScoreHistoryVisible, setIsScoreHistoryVisible] = useState(false);
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const [theme, setTheme] = useState('neon-pulse');
+  const [wordFacing, setWordFacing] = useState<WordFacing>('upright');
 
   const showScoreHistoryModal = () => setIsScoreHistoryVisible(true);
   const hideScoreHistoryModal = () => setIsScoreHistoryVisible(false);
@@ -51,16 +55,30 @@ const App: React.FC = () => {
       console.error("Failed to save theme:", error);
     }
   };
+  
+  const handleWordFacingChange = (newFacing: WordFacing) => {
+    setWordFacing(newFacing);
+    try {
+      localStorage.setItem('neon-type-racer-word-facing', newFacing);
+    } catch (error) {
+      console.error("Failed to save word facing preference:", error);
+    }
+  };
 
-  // Load theme from localStorage on initial mount
+
+  // Load theme and word facing from localStorage on initial mount
   useEffect(() => {
     try {
       const savedTheme = localStorage.getItem('neon-type-racer-theme');
       if (savedTheme) {
         setTheme(savedTheme);
       }
+      const savedFacing = localStorage.getItem('neon-type-racer-word-facing');
+      if (savedFacing === 'tilted' || savedFacing === 'upright') {
+        setWordFacing(savedFacing);
+      }
     } catch (error) {
-      console.error("Failed to load theme:", error);
+      console.error("Failed to load settings from localStorage:", error);
     }
   }, []);
 
@@ -86,6 +104,7 @@ const App: React.FC = () => {
         const savedScores = JSON.parse(savedScoresRaw);
         setScoreHistory(savedScores);
       }
+    // Fix: Corrected invalid `catch` block syntax. The `=>` was causing a parse error which led to all subsequent scope issues.
     } catch (error) {
       console.error("Failed to load score history:", error);
     }
@@ -109,7 +128,7 @@ const App: React.FC = () => {
   
   // Handle game state transitions for menu and restart
   useEffect(() => {
-    const transitionDuration = 700; // This should match the main transition duration
+    const transitionDuration = 400; // This should match the main transition duration
     if (gameStatus === GameStatus.ReturningToMenu || gameStatus === GameStatus.ReturningToMenuFromPlaying) {
       const timer = setTimeout(() => {
         resetGame(); // This returns to the main menu
@@ -162,7 +181,7 @@ const App: React.FC = () => {
       ></div>
 
       {/* Menu Background Decorations */}
-      <div className={`absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-700 ${isMenu ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-400 ${isMenu ? 'opacity-100' : 'opacity-0'}`}>
         <MenuBackgroundEffects />
       </div>
 
@@ -205,11 +224,11 @@ const App: React.FC = () => {
       <div className="w-full max-w-5xl mx-auto flex flex-col items-center relative z-10 flex-grow">
         
         {/* Header section (moves up and scales) */}
-        <div className={`text-center transition-all duration-700 ease-in-out ${gameHasStarted ? 'pt-4' : 'pt-24 md:pt-32'}`}>
-          <h1 className="text-5xl font-bold text-[var(--color-primary-light)] tracking-widest transition-all duration-700" style={{ textShadow: '0 0 5px var(--color-primary-light), 0 0 15px var(--color-primary), 0 0 30px var(--color-primary), 2px 2px 4px rgba(0,0,0,0.3)' }}>
+        <div className={`text-center transition-all duration-400 ease-in-out ${gameHasStarted ? 'pt-4' : 'pt-24 md:pt-32'}`}>
+          <h1 className="text-5xl font-bold text-[var(--color-primary-light)] tracking-widest transition-all duration-400" style={{ textShadow: '0 0 5px var(--color-primary-light), 0 0 15px var(--color-primary), 0 0 30px var(--color-primary), 2px 2px 4px rgba(0,0,0,0.3)' }}>
             typino.com
           </h1>
-          <p className={`text-[var(--color-secondary-text-on-dark)] mt-2 mb-8 transition-opacity duration-500 ${isMenu ? 'opacity-100' : 'opacity-0'}`}>
+          <p className={`text-[var(--color-secondary-text-on-dark)] mt-2 mb-8 transition-opacity duration-300 ${isMenu ? 'opacity-100' : 'opacity-0'}`}>
             Type the falling words before they hit the bottom!
           </p>
         </div>
@@ -217,7 +236,7 @@ const App: React.FC = () => {
         {/* Controls Container (cross-fades between menu and game controls) */}
         <div className="relative w-full h-24">
           {/* Menu Controls (Start Button) */}
-          <div className={`absolute inset-0 transition-opacity duration-500 ${isMenu ? 'opacity-100 z-20' : 'opacity-0 pointer-events-none z-10'}`}>
+          <div className={`absolute inset-0 transition-opacity duration-300 ${isMenu ? 'opacity-100 z-20' : 'opacity-0 pointer-events-none z-10'}`}>
             <Controls
               gameStatus={GameStatus.Ready}
               score={score}
@@ -232,7 +251,7 @@ const App: React.FC = () => {
           </div>
 
           {/* Game Controls (Stats Bar) */}
-          <div className={`absolute inset-0 transition-opacity duration-700 ${isGameActiveOrOver ? 'opacity-100 z-20' : 'opacity-0 pointer-events-none z-10'}`}>
+          <div className={`absolute inset-0 transition-opacity duration-400 ${isGameActiveOrOver ? 'opacity-100 z-20' : 'opacity-0 pointer-events-none z-10'}`}>
             <Controls
               gameStatus={gameStatus}
               score={score}
@@ -247,15 +266,18 @@ const App: React.FC = () => {
         </div>
         
         {/* Game Screen Container (comes into focus) */}
-        <div ref={gameScreenContainerRef} className={`w-full flex-grow relative origin-top transition-all duration-700 ease-in-out ${isGameScreenFocused ? 'opacity-100 blur-0 scale-100' : 'opacity-50 blur-sm scale-90'}`}>
-            <GameScreen 
-              gameStatus={gameStatus}
-              words={isMenu ? [] : words} 
-              typedWord={isMenu ? '' : typedWord} 
-              particles={isMenu ? [] : particles} 
-              activeWord={isMenu ? null : activeWord} 
-              scorePopups={isMenu ? [] : scorePopups} 
-            />
+        <div ref={gameScreenContainerRef} className={`w-full flex-grow relative origin-top transition-[opacity,filter,transform] duration-400 ease-in-out ${isGameScreenFocused ? 'opacity-100 blur-0 scale-100' : (isMenu ? 'opacity-0 pointer-events-none' : 'opacity-50 blur-sm scale-90')}`}>
+            {gameHasStarted && (
+              <GameScreen 
+                gameStatus={gameStatus}
+                words={words}
+                typedWord={typedWord}
+                particles={particles}
+                activeWord={activeWord}
+                scorePopups={scorePopups}
+                wordFacing={wordFacing}
+              />
+            )}
         </div>
 
         {/* GameOver Overlay */}
@@ -303,6 +325,8 @@ const App: React.FC = () => {
         onClose={hideOptionsModal}
         currentTheme={theme}
         onSetTheme={handleThemeChange}
+        currentWordFacing={wordFacing}
+        onSetWordFacing={handleWordFacingChange}
       />
     </div>
   );

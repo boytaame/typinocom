@@ -42,8 +42,8 @@ const generateDecorations = (): Decoration[] => {
     }
 
     const size = Math.random() * 50 + 20; // 20px to 70px
-    const floatDuration = Math.random() * 20 + 20; // 20s to 40s
-    const pulseDuration = Math.random() * 5 + 3; // 3s to 8s
+    const floatDuration = Math.random() * 15 + 15; // 15s to 30s
+    const pulseDuration = Math.random() * 4 + 2; // 2s to 6s
     
     const startOpacity = Math.random() * 0.1 + 0.05; // 0.05 to 0.15
     const endOpacity = startOpacity + Math.random() * 0.2 + 0.1; // Add 0.1 to 0.3

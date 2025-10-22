@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 
 const FOCUSABLE_ELEMENTS_SELECTOR = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -15,7 +15,8 @@ const useFocusTrap = (ref: React.RefObject<HTMLElement>, isOpen: boolean) => {
       return;
     }
 
-    const focusableElements = Array.from(
+    // Fix: Explicitly type `focusableElements` as HTMLElement[] to guide the compiler.
+    const focusableElements: HTMLElement[] = Array.from(
       ref.current.querySelectorAll<HTMLElement>(FOCUSABLE_ELEMENTS_SELECTOR)
     );
 

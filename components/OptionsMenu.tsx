@@ -1,11 +1,15 @@
 import React, { useState, useRef } from 'react';
 import useFocusTrap from '../hooks/useFocusTrap';
 
+type WordFacing = 'tilted' | 'upright';
+
 interface OptionsMenuProps {
   isOpen: boolean;
   onClose: () => void;
   currentTheme: string;
   onSetTheme: (theme: string) => void;
+  currentWordFacing: WordFacing;
+  onSetWordFacing: (facing: WordFacing) => void;
 }
 
 const THEMES = [
@@ -16,7 +20,7 @@ const THEMES = [
   { id: 'plasma-core', name: 'Plasma Core' },
 ];
 
-const OptionsMenu: React.FC<OptionsMenuProps> = ({ isOpen, onClose, currentTheme, onSetTheme }) => {
+const OptionsMenu: React.FC<OptionsMenuProps> = ({ isOpen, onClose, currentTheme, onSetTheme, currentWordFacing, onSetWordFacing }) => {
   const [isClosing, setIsClosing] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -87,6 +91,37 @@ const OptionsMenu: React.FC<OptionsMenuProps> = ({ isOpen, onClose, currentTheme
               ))}
             </div>
           </div>
+          
+          <div>
+            <h3 className="text-xl font-bold text-[var(--color-text-base)] mb-3">Word Facing</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <button
+                onClick={() => onSetWordFacing('tilted')}
+                className={`py-3 font-bold rounded-lg transition-all duration-200 border-2 
+                  ${currentWordFacing === 'tilted' 
+                    ? 'bg-[var(--color-primary)] text-[var(--color-text-dark)] border-[var(--color-primary-light)] shadow-[inset_0_0_4px_rgba(0,0,0,0.7),0_0_2px_#fff,0_0_5px_var(--color-primary-light),0_0_10px_var(--color-primary),2px_2px_8px_rgba(0,0,0,0.5)] scale-105' 
+                    : 'bg-[var(--color-ui-medium)] text-[var(--color-text-base)] border-transparent hover:border-[var(--color-primary-light)] hover:bg-[var(--color-ui-light)]'
+                  }`
+                }
+                aria-pressed={currentWordFacing === 'tilted'}
+              >
+                Tilted
+              </button>
+              <button
+                onClick={() => onSetWordFacing('upright')}
+                className={`py-3 font-bold rounded-lg transition-all duration-200 border-2 
+                  ${currentWordFacing === 'upright' 
+                    ? 'bg-[var(--color-primary)] text-[var(--color-text-dark)] border-[var(--color-primary-light)] shadow-[inset_0_0_4px_rgba(0,0,0,0.7),0_0_2px_#fff,0_0_5px_var(--color-primary-light),0_0_10px_var(--color-primary),2px_2px_8px_rgba(0,0,0,0.5)] scale-105' 
+                    : 'bg-[var(--color-ui-medium)] text-[var(--color-text-base)] border-transparent hover:border-[var(--color-primary-light)] hover:bg-[var(--color-ui-light)]'
+                  }`
+                }
+                aria-pressed={currentWordFacing === 'upright'}
+              >
+                Upright
+              </button>
+            </div>
+          </div>
+
         </div>
 
         <div className="p-6 border-t border-[var(--color-secondary)]/50 text-right opacity-0 animate-fade-in-up animation-delay-200">

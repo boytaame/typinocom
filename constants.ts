@@ -41,17 +41,28 @@ export const WORD_LIST = [
 ];
 
 export const LANES = 4;
-export const INITIAL_SPEED = 1.6;
-export const MAX_SPEED = 8;
+export const INITIAL_SPEED = 0.6; // Slower start speed for words
+export const MAX_SPEED = 4.5; // Capped max speed for a more manageable endgame
 export const SPEED_RAMP_UP_DURATION_MS = 180000; // 3 minutes
-export const INITIAL_WORD_SPAWN_RATE_MS = 3500; // Start spawning one word every 3.5 seconds
-export const MIN_WORD_SPAWN_RATE_MS = 2000; // Ramp up to one word every 2 seconds
-export const SPAWN_RATE_RAMP_UP_DURATION_MS = 90000; // Ramp up over 90 seconds
-export const BASE_FALL_RATE = 0.05;
+export const INITIAL_WORD_SPAWN_RATE_MS = 1900; // Faster initial spawn rate for more words
+export const MIN_WORD_SPAWN_RATE_MS = 900; // Faster max spawn rate
+export const SPAWN_RATE_RAMP_UP_DURATION_MS = 180000; // 3 minutes
+export const BASE_FALL_RATE = 0.2;
 export const INITIAL_LIVES = 5;
 export const PARTICLES_PER_WORD = 12;
-export const WORD_COMPLETE_ANIMATION_MS = 300;
+export const WORD_COMPLETE_ANIMATION_MS = 200;
 export const TYPO_PENALTY = 5;
+
+// --- Board Projection Constants ---
+export const BOARD_TILT_DEGREES = 55;
+// Exponent for the perspective effect curve. 1 is linear, >1 makes words appear to accelerate as they get closer (fall down).
+export const PERSPECTIVE_STRENGTH = 1.2; 
+// How much wider the lanes appear at the bottom vs. the top. 1 = no change.
+export const PERSPECTIVE_HORIZONTAL_FACTOR = 1.25;
+// How much words scale as they fall.
+export const WORD_MIN_SCALE = 0.75;
+export const WORD_MAX_SCALE = 1.0;
+
 
 export const POWER_UP_ORDER: PowerUpType[] = [
   PowerUpType.TimeWarp,

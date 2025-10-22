@@ -276,12 +276,20 @@ const useTypingGame = () => {
   
     setTimeout(() => {
       setGameStatus(GameStatus.Starting);
-    }, 500);
+    }, 300);
 
     setTimeout(() => {
       setGameStatus(GameStatus.Playing);
-    }, 500 + 700);
-  }, []);
+      // The game loop will start running now, but we will manually spawn the first word.
+    }, 300 + 400);
+
+    // Schedule the first word to appear 2 seconds after the game starts.
+    setTimeout(() => {
+      spawnWord();
+      // Reset the spawn timer to ensure the next word spawns after a normal delay.
+      timeSinceLastSpawn.current = 0;
+    }, 2000);
+  }, [spawnWord]);
   
   useEffect(() => {
     if (gameStatus === GameStatus.Playing) {
