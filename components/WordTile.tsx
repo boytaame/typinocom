@@ -116,4 +116,4 @@ const WordTile: React.FC<WordTileProps> = ({ word, typedWord, activeWord, wordFa
   );
 };
 
-export default WordTile;
+export default React.memo(WordTile);

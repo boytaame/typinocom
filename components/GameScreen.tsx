@@ -1,7 +1,9 @@
 import React from 'react';
-import { Word, Particle, ScorePopup, GameStatus } from '../types';
+import { Word, Particle as ParticleType, ScorePopup as ScorePopupType, GameStatus } from '../types';
 import WordTile from './WordTile';
-import { LANES, BOARD_TILT_DEGREES, PERSPECTIVE_STRENGTH, PERSPECTIVE_HORIZONTAL_FACTOR, WORD_MIN_SCALE, WORD_MAX_SCALE } from '../constants';
+import Particle from './Particle';
+import ScorePopup from './ScorePopup';
+import { BOARD_TILT_DEGREES } from '../constants';
 
 type WordFacing = 'tilted' | 'upright';
 
@@ -9,26 +11,14 @@ interface GameScreenProps {
   gameStatus: GameStatus;
   words: Word[];
   typedWord: string;
-  particles: Particle[];
+  particles: ParticleType[];
   activeWord: Word | null;
-  scorePopups: ScorePopup[];
+  scorePopups: ScorePopupType[];
   wordFacing: WordFacing;
 }
 
 const GameScreen: React.FC<GameScreenProps> = ({ gameStatus, words, typedWord, particles, activeWord, scorePopups, wordFacing }) => {
   const isPlaying = gameStatus === GameStatus.Playing;
-
-  const COS_TILT = Math.cos(BOARD_TILT_DEGREES * Math.PI / 180);
-  const boardProjectedHeight = 100 * COS_TILT;
-  const boardTopOffset = (100 - boardProjectedHeight) / 2;
-
-  const getProjectedY = (y: number): number => {
-    const normalizedY = y / 100;
-    // Apply a power curve to simulate perspective: slow at the top, fast at the bottom.
-    const perspectiveY = Math.pow(normalizedY, PERSPECTIVE_STRENGTH);
-    return boardTopOffset + (perspectiveY * boardProjectedHeight);
-  };
-
 
   return (
     <div className="w-full h-full relative" style={{ perspective: '1000px' }}>
@@ -65,63 +55,17 @@ const GameScreen: React.FC<GameScreenProps> = ({ gameStatus, words, typedWord, p
       {/* Layer 2: The 2D Overlay (for Particles, Popups) */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Particles */}
-        {particles.map(particle => {
-          const topPosition = getProjectedY(particle.y);
-          const normalizedY = particle.y / 100;
-          const perspectiveY = Math.pow(normalizedY, PERSPECTIVE_STRENGTH);
-          const scale = WORD_MIN_SCALE + (WORD_MAX_SCALE - WORD_MIN_SCALE) * perspectiveY;
-          const centerOffset = particle.x - 50;
-          const horizontalScale = 1 + (PERSPECTIVE_HORIZONTAL_FACTOR - 1) * perspectiveY;
-          const left = 50 + centerOffset * horizontalScale;
-
-          return (
-            <div
-              key={particle.id}
-              className="absolute rounded-full"
-              style={{
-                left: `${left}%`,
-                top: `${topPosition}%`,
-                width: `${particle.size}px`,
-                height: `${particle.size}px`,
-                opacity: particle.opacity,
-                transform: `translate(-50%, -50%) scale(${scale})`,
-                transition: 'opacity 0.5s ease-out',
-                backgroundColor: particle.color,
-                boxShadow: `0 0 8px ${particle.color}`,
-              }}
-            />
-          );
-        })}
+        {particles.map(particle => (
+          <Particle key={particle.id} particle={particle} />
+        ))}
 
         {/* Score Popups */}
-        {scorePopups.map(popup => {
-          const topPosition = getProjectedY(popup.y);
-          const normalizedY = popup.y / 100;
-          const perspectiveY = Math.pow(normalizedY, PERSPECTIVE_STRENGTH);
-          const scale = WORD_MIN_SCALE + (WORD_MAX_SCALE - WORD_MIN_SCALE) * perspectiveY;
-          const centerOffset = popup.x - 50;
-          const horizontalScale = 1 + (PERSPECTIVE_HORIZONTAL_FACTOR - 1) * perspectiveY;
-          const left = 50 + centerOffset * horizontalScale;
-
-          return (
-            <div
-              key={popup.id}
-              className={`absolute text-3xl font-bold score-popup pointer-events-none ${popup.color === 'green' ? 'text-[var(--color-success-light)]' : 'text-[var(--color-danger)]'}`}
-              style={{
-                left: `${left}%`,
-                top: `${topPosition}%`,
-                transform: `translateX(-50%) scale(${scale})`,
-                textShadow: `0 0 4px ${popup.color === 'green' ? 'var(--color-success-light)' : 'var(--color-danger-light)'}, 0 0 10px ${popup.color === 'green' ? 'var(--color-success)' : 'var(--color-danger)'}`,
-                zIndex: 20,
-              }}
-            >
-              {popup.text}
-            </div>
-          );
-        })}
+        {scorePopups.map(popup => (
+          <ScorePopup key={popup.id} popup={popup} />
+        ))}
       </div>
     </div>
   );
 };
 
-export default GameScreen;
+export default React.memo(GameScreen);
